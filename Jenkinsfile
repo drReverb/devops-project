@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.6.3'  // or replace with Gradle if you're using Gradle
+        maven 'Maven 3.6.3'
     }
     stages {
         //stage('Checkout') {
