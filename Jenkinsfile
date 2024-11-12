@@ -1,18 +1,14 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.6.3'  // or replace with Gradle if you're using Gradle
+        maven 'Maven 3.6.3'
     }
-    //environment {
-     //   VERACODE_API_ID = credentials('veracode-api-id')  // API credentials stored securely in Jenkins
-       // VERACODE_API_KEY = credentials('veracode-api-key')
-    //}
     stages {
-        stage('Checkout') {
-			steps {
-				git branch: 'dev', url: 'https://github.com/drReverb/devops-project.git'
-			}
-		}
+        /*stage('Checkout') {
+		//	steps {
+		//		git branch: 'dev', url: 'https://github.com/drReverb/devops-project.git'
+		//	}
+		//}*/
         stage('Build') {
 		   steps {
 			  script {
@@ -35,21 +31,6 @@ pipeline {
 			  }
 		   }
 		}
-        /*stage('Security Scanning') {
-            steps {
-                script {
-                    echo 'Running security scan with Veracode...'
-                    sh '''
-                    veracode -vid ${VERACODE_API_ID} \
-                             -vkey ${VERACODE_API_KEY} \
-                             -action UploadAndScan \
-                             -appname MyApp \
-                             -createprofile true \
-                             -filepath target/myapp.war
-                    '''
-                }
-            }
-        }*/
         stage('Deploy to Dev') {
 		   when {
 			  expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
