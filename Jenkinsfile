@@ -4,11 +4,11 @@ pipeline {
         maven 'Maven 3.6.3'
     }
     stages {
-        //stage('Checkout') {
+        /*stage('Checkout') {
 		//	steps {
 		//		git branch: 'dev', url: 'https://github.com/drReverb/devops-project.git'
 		//	}
-		//}
+		//}*/
         stage('Build') {
 		   steps {
 			  script {
