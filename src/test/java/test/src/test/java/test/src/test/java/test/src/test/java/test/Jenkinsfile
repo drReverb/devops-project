@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-		MAVEN_HOME = tool 'Maven 3.8.1' // Update with your Maven installation name
-		JAVA_HOME = tool 'jdk-21.0.4.7-hotspot' // Update with your JDK installation
-		name TOMCAT_HOME = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 11.0_Tomcat11_Temp' // Update with your Tomcat installation path
+		MAVEN_HOME = tool 'Maven 3.8.1'
+		JAVA_HOME = tool 'jdk-21.0.4.7-hotspot'
+		name TOMCAT_HOME = 'C:\\Program Files\\Apache Software Foundation\\TC:\Program Files\Apache Software Foundation\Tomcat 9.0'
 	}
 	tools {
 		maven "${MAVEN_HOME}"
@@ -12,7 +12,6 @@ pipeline {
     stages {
 		stage('Checkout') {
             steps {
-                // Checkout code from Git
                 checkout scm
             }
         }
@@ -28,7 +27,6 @@ pipeline {
         }
         stage('Deploy to Tomcat') {
 			steps {
-				// Clean up previous deployment and copy new build files to Tomcat
 				bat '''
 				rmdir /S /Q "%TOMCAT_HOME%\\webapps\\your-app"
 				xcopy /s /e /i /y /q target/*.war "%TOMCAT_HOME%\\webapps\\your-app"
@@ -36,7 +34,7 @@ pipeline {
 			}
 		}
 		stage('Restart Tomcat') {
-			steps { // Restart Tomcat service
+			steps {
 				bat '''
 				net stop Tomcat9
 				net start Tomcat9
