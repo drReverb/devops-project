@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-		MAVEN_HOME = tool 'Maven 3.8.1'
-		JAVA_HOME = tool 'jdk-21.0.4.7-hotspot'
+		MAVEN_HOME = tool 'Maven 3.9.9'
+		JAVA_HOME = tool 'Java 21'
 		TOMCAT_HOME = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0'
 	}
 	tools {
