@@ -1,15 +1,19 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.6.3'
+        jdk 'jdk11'
+        maven 'maven3'
+    }
+	environment {
+        CATALINA_HOME='C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0'
     }
     stages {
-        /*stage('Checkout') {
+        //stage('Checkout') {
 		//	steps {
 		//		git branch: 'dev', url: 'https://github.com/drReverb/devops-project.git'
 		//	}
-		//}*/
-        stage('Build') {
+		//}
+        /*stage('Build') {
 		   steps {
 			  script {
 				 if (fileExists('build.gradle')) {
@@ -19,28 +23,32 @@ pipeline {
 				 }
 			  }
 		   }
-		}
+		}*/
+		stage('Build') {
+            steps {
+                bat "mvn clean package -DskipTests"
+            }
+        }
         stage('Unit Test') {
-		   steps {
-			  script {
-				 if (fileExists('build.gradle')) {
-					sh './gradlew test'
-				 } else if (fileExists('pom.xml')) {
-					sh 'mvn test'
-				 }
-			  }
-		   }
-		}
-        stage('Deploy to Dev') {
-		   when {
-			  expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-		   }
-		   steps {
-			  script {
-				 sh 'curl -T target/*.war "http://tomcat-user:tomcat-pass@tomcat-server:8090/manager/text/deploy?path=/your-app&update=true"'
-			  }
-		   }
-		}
+            steps {
+                bat "mvn test"
+            }
+        }
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                    bat 'copy "target\\*.war" "%CATALINA_HOME%\\webapps\\"'
+                }
+            }
+        }
+        stage('Restart Tomcat') {
+            steps {
+                script {
+                    bat "net stop Tomcat9"
+                    bat "net start Tomcat9"
+                }
+            }
+        }
     }
     post {
         success {
