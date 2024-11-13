@@ -3,7 +3,7 @@ pipeline {
     environment {
 		MAVEN_HOME = tool 'Maven 3.8.1'
 		JAVA_HOME = tool 'jdk-21.0.4.7-hotspot'
-		TOMCAT_HOME = 'C:\Program Files\Apache Software Foundation\Tomcat 9.0'
+		TOMCAT_HOME = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0'
 	}
 	tools {
 		maven "${MAVEN_HOME}"
