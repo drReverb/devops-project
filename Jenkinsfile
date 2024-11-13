@@ -8,11 +8,11 @@ pipeline {
         CATALINA_HOME='C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0'
     }
     stages {
-        /*stage('Checkout') {
+        //stage('Checkout') {
 		//	steps {
 		//		git branch: 'dev', url: 'https://github.com/drReverb/devops-project.git'
 		//	}
-		//}*/
+		//}
         /*stage('Build') {
 		   steps {
 			  script {
